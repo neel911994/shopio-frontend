@@ -21,11 +21,11 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 
 const variantStyles: Record<ButtonVariant, string> = {
   primary:
-    "bg-purple-600 text-white hover:bg-purple-700 focus:ring-purple-500",
+    "bg-gradient-to-r from-purple-600 to-blue-500 text-white hover:from-purple-700 hover:to-blue-600 focus:ring-purple-500",
   secondary:
     "bg-gray-700 text-white hover:bg-gray-600 focus:ring-gray-500",
   outline:
-    "border border-gray-300 bg-transparent text-gray-700 hover:bg-gray-50 focus:ring-gray-400 dark:border-gray-600 dark:text-gray-200 dark:hover:bg-gray-800",
+    "border border-gray-300 bg-transparent text-gray-700 hover:bg-gray-50 focus:ring-gray-400 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800",
   danger:
     "bg-red-600 text-white hover:bg-red-700 focus:ring-red-500",
   success:

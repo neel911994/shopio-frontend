@@ -61,13 +61,13 @@ export default function Input({
           id={inputId}
           type={resolvedType}
           className={`
-            w-full rounded-lg border bg-white dark:bg-gray-900
+            w-full rounded-lg border bg-white dark:bg-gray-800
             text-gray-900 dark:text-gray-100
             placeholder-gray-400 dark:placeholder-gray-500
             transition-colors duration-200
             focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent
             disabled:opacity-50 disabled:cursor-not-allowed
-            ${error ? "border-red-500 focus:ring-red-500" : "border-gray-300 dark:border-gray-600"}
+            ${error ? "border-red-500 focus:ring-red-500" : "border-gray-300 dark:border-gray-700"}
             ${leftIcon ? "pl-10" : ""}
             ${rightIcon || (isPassword && showPasswordToggle) ? "pr-10" : ""}
             ${sizeStyles[inputSize]}
