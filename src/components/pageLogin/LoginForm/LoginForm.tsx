@@ -1,7 +1,7 @@
 "use client";
 
 import { useActionState } from "react";
-import { useAuth } from "@/context/AuthContext";
+import { loginAction } from "@/actions/auth.actions";
 import { Input, Button, Checkbox } from "@/components/shared";
 import {
   MailIcon,
@@ -9,35 +9,9 @@ import {
   EyeIcon,
   EyeOffIcon,
   ArrowRightIcon,
-  GoogleIcon,
 } from "@/components/svg";
 
-interface LoginFormState {
-  error: string;
-}
-
 export default function LoginForm() {
-  const { login } = useAuth();
-
-  async function loginAction(
-    _prevState: LoginFormState,
-    formData: FormData
-  ): Promise<LoginFormState> {
-    const email = formData.get("email") as string;
-    const password = formData.get("password") as string;
-
-    if (!email || !password) {
-      return { error: "Please fill in all fields." };
-    }
-
-    try {
-      login(email, password);
-      return { error: "" };
-    } catch {
-      return { error: "Invalid email or password." };
-    }
-  }
-
   const [state, formAction, isPending] = useActionState(loginAction, {
     error: "",
   });
@@ -96,7 +70,6 @@ export default function LoginForm() {
       >
         Sign in
       </Button>
-
     </form>
   );
 }
