@@ -1,19 +1,21 @@
 import { NextRequest, NextResponse } from "next/server";
 
-const protectedRoutes = ["/dashboard"];
-const publicRoutes = ["/login"];
+const PUBLIC_ROUTES = ["/login"];
 
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const token = request.cookies.get("auth_token")?.value;
+  const isPublicRoute = PUBLIC_ROUTES.some((route) =>
+    pathname.startsWith(route)
+  );
 
-  // Redirect unauthenticated users away from protected routes
-  if (protectedRoutes.some((route) => pathname.startsWith(route)) && !token) {
+  // No token → send to login (except if already on a public route)
+  if (!token && !isPublicRoute) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
 
-  // Redirect authenticated users away from login
-  if (publicRoutes.some((route) => pathname.startsWith(route)) && token) {
+  // Has token → don't allow accessing login again
+  if (token && isPublicRoute) {
     return NextResponse.redirect(new URL("/dashboard", request.url));
   }
 
@@ -21,5 +23,6 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/dashboard/:path*", "/login"],
+  // Run on all routes except Next.js internals and static files
+  matcher: ["/((?!_next/static|_next/image|favicon.ico).*)"],
 };

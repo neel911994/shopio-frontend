@@ -11,3 +11,6 @@ export { default as Pagination } from "./Pagination/Pagination";
 export { default as SearchInput } from "./SearchInput/SearchInput";
 export { default as Select } from "./Select/Select";
 export { default as Avatar } from "./Avatar/Avatar";
+export { default as Sidebar } from "./Sidebar/Sidebar";
+export { default as Header } from "./Header/Header";
+export { default as PageContent } from "./PageContent/PageContent";
