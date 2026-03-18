@@ -37,13 +37,13 @@ export default function StatCard({
   return (
     <div
       className={`
-        bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6
+        bg-gray-800 rounded-xl border border-gray-700 p-6
         ${className}
       `}
     >
       <div className="flex items-start justify-between mb-4">
         {icon && (
-          <div className="p-2.5 rounded-lg bg-gray-100 dark:bg-gray-700">
+          <div className="p-2.5 rounded-lg bg-gray-700">
             {icon}
           </div>
         )}
@@ -56,17 +56,17 @@ export default function StatCard({
           </span>
         )}
         {alert && (
-          <span className="inline-flex items-center px-2 py-1 text-xs font-medium text-red-600 bg-red-50 dark:bg-red-900/20 dark:text-red-400 rounded-md">
+          <span className="inline-flex items-center px-2 py-1 text-xs font-medium text-red-400 bg-red-900/20 rounded-md">
             {alert}
           </span>
         )}
       </div>
-      <p className="text-2xl font-bold text-gray-900 dark:text-white">
+      <p className="text-2xl font-bold text-white">
         {value}
       </p>
-      <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">{label}</p>
+      <p className="text-sm text-gray-300 mt-1">{label}</p>
       {subtitle && (
-        <p className="text-xs text-gray-400 dark:text-gray-500 mt-1">
+        <p className="text-xs text-gray-400 mt-1">
           {subtitle}
         </p>
       )}

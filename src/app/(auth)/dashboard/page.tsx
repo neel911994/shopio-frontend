@@ -1,7 +1,5 @@
+import Dashboard from "@/components/pageDashboard/Dashboard/Dashboard";
+
 export default function DashboardPage() {
-  return (
-    <div>
-      <p className="text-gray-400">Welcome to Shopio Dashboard!</p>
-    </div>
-  );
+  return <Dashboard />;
 }

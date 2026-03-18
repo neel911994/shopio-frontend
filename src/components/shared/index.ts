@@ -14,3 +14,5 @@ export { default as Avatar } from "./Avatar/Avatar";
 export { default as Sidebar } from "./Sidebar/Sidebar";
 export { default as Header } from "./Header/Header";
 export { default as PageContent } from "./PageContent/PageContent";
+export { default as DonutChart } from "./DonutChart/DonutChart";
+export type { DonutSegment } from "./DonutChart/DonutChart";
