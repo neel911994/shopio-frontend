@@ -1,58 +1,14 @@
 import { apiClient } from "./api";
-
-export type OrderStatus = "PENDING" | "PAID" | "SHIPPED" | "DELIVERED" | "CANCELLED";
-
-export interface OrderProductSummary {
-  productId: string;
-  productName: string;
-  price: number;
-  quantity: number;
-}
-
-export interface OrderProductDetail extends OrderProductSummary {
-  productDesc: string;
-  categoryName: string;
-}
-
-export interface Order {
-  orderId: string;
-  customerName: string;
-  status: OrderStatus;
-  totalAmount: number;
-  createdAt?: string;
-  products: OrderProductSummary[];
-}
-
-export interface OrderDetail {
-  orderId: string;
-  customerId: string;
-  customerName: string;
-  totalAmount: number;
-  products: OrderProductDetail[];
-}
-
-export interface OrderFilters {
-  status?: OrderStatus;
-  startDate?: string;
-  endDate?: string;
-  customerName?: string;
-  page?: number;
-  limit?: number;
-}
-
-export interface OrderPagination {
-  total: number;
-  page: number;
-  limit: number;
-  totalPages: number;
-}
-
-export interface OrdersResponse {
-  data: Order[];
-  pagination: OrderPagination;
-}
+export type {
+  OrderStatus, OrderProductSummary, OrderProductDetail,
+  Order, OrderDetail, OrderFilters, OrderPagination, OrdersResponse, OrderStats,
+} from "@/config/model";
+import type { OrderFilters, OrdersResponse, OrderDetail, Order, OrderStatus, OrderStats } from "@/config/model";
 
 export const ordersService = {
+  // GET /api/orders/stats
+  getStats: () => apiClient.get<OrderStats>("/orders/stats"),
+
   // GET /api/orders with optional filters + pagination
   listOrders: (filters?: OrderFilters) => {
     const params = new URLSearchParams();

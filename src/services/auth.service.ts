@@ -1,21 +1,6 @@
 import { apiClient } from "./api";
-
-export interface LoginPayload {
-  email: string;
-  password: string;
-}
-
-export interface AuthUser {
-  id: string;
-  name: string;
-  email: string;
-  role: string;
-}
-
-export interface LoginResponse {
-  token: string;
-  user: AuthUser;
-}
+export type { LoginPayload, AuthUser, LoginResponse } from "@/config/model";
+import type { LoginPayload, LoginResponse } from "@/config/model";
 
 export const authService = {
   login: (payload: LoginPayload) =>

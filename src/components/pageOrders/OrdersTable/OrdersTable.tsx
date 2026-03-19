@@ -1,9 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { Table, type Column } from "@/components/shared";
 import type { Order, OrderStatus } from "@/services/orders.service";
-import OrderDetailModal from "@/components/pageOrders/OrderDetailModal/OrderDetailModal";
 
 type OrderRow = {
   orderId: string;
@@ -44,7 +43,9 @@ interface OrdersTableProps {
 }
 
 export default function OrdersTable({ orders }: OrdersTableProps) {
-  const [selected, setSelected] = useState<OrderRow | null>(null);
+  const router       = useRouter();
+  const pathname     = usePathname();
+  const searchParams = useSearchParams();
 
   const rows: OrderRow[] = orders.map((o) => ({
     orderId:      o.orderId,
@@ -56,28 +57,19 @@ export default function OrdersTable({ orders }: OrdersTableProps) {
     createdAt:    formatDate(o.createdAt),
   }));
 
-  return (
-    <>
-      <Table
-        columns={columns}
-        data={rows}
-        keyExtractor={(row) => row.orderId}
-        onCellAction={(row) => setSelected(row)}
-        emptyMessage="No orders found"
-      />
+  function handleOrderClick(row: OrderRow) {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("orderId", row.orderId);
+    router.push(`${pathname}?${params.toString()}`);
+  }
 
-      {selected && (
-        <OrderDetailModal
-          orderId={selected.orderId}
-          shortId={selected.shortId}
-          status={selected.status}
-          customerName={selected.customerName}
-          totalAmount={selected.totalAmount}
-          itemCount={selected.itemCount}
-          createdAt={selected.createdAt}
-          onClose={() => setSelected(null)}
-        />
-      )}
-    </>
+  return (
+    <Table
+      columns={columns}
+      data={rows}
+      keyExtractor={(row) => row.orderId}
+      onCellAction={handleOrderClick}
+      emptyMessage="No orders found"
+    />
   );
 }

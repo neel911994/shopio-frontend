@@ -9,11 +9,12 @@ interface OrdersPageProps {
     customerName?: string;
     page?: string;
     limit?: string;
+    orderId?: string;
   }>;
 }
 
 export default async function OrdersPage({ searchParams }: OrdersPageProps) {
-  const { status, startDate, endDate, customerName, page, limit } = await searchParams;
+  const { status, startDate, endDate, customerName, page, limit, orderId } = await searchParams;
   return (
     <Orders
       status={status as OrderStatus | undefined}
@@ -22,6 +23,7 @@ export default async function OrdersPage({ searchParams }: OrdersPageProps) {
       customerName={customerName}
       page={page ? Number(page) : 1}
       limit={limit ? Number(limit) : 10}
+      orderId={orderId}
     />
   );
 }
