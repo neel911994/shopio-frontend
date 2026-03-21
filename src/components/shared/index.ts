@@ -16,3 +16,5 @@ export { default as Header } from "./Header/Header";
 export { default as PageContent } from "./PageContent/PageContent";
 export { default as DonutChart } from "./DonutChart/DonutChart";
 export type { DonutSegment } from "./DonutChart/DonutChart";
+export { default as EditForm } from "./EditForm/EditForm";
+export type { EditField, FieldType } from "./EditForm/EditForm";

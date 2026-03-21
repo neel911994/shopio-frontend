@@ -154,3 +154,114 @@ export interface OrderStats {
   completedOrders: OrderStatItem;
   revenue:         OrderStatItem;
 }
+
+// ─── Products ─────────────────────────────────────────────────────────────────
+
+export type StockStatus = "IN_STOCK" | "LOW_STOCK" | "OUT_OF_STOCK";
+
+export interface Product {
+  id: string;
+  name: string;
+  description?: string;
+  price: number;
+  stock: number;
+  isActive: boolean;
+  category: { name: string };
+  createdAt?: string;
+}
+
+export type StockFilter = "inStock" | "lowStock" | "outOfStock";
+
+export interface ProductFilters {
+  categoryId?: string;
+  stockFilter?: StockFilter;
+  search?: string;
+  page?: number;
+  limit?: number;
+}
+
+export interface ProductPagination {
+  total: number;
+  page: number;
+  limit: number;
+  totalPages: number;
+}
+
+export interface ProductCategory {
+  id: string;
+  name: string;
+}
+
+export interface ProductsResponse {
+  products: Product[];
+  categories: ProductCategory[];
+  pagination?: ProductPagination;
+}
+
+export interface ProductStats {
+  total:       number;
+  active:      number;
+  lowStock:    number;
+  outOfStock:  number;
+}
+
+// ─── Customers ───────────────────────────────────────────────────────────────
+
+export interface Customer {
+  id:          string;
+  name:        string;
+  email:       string;
+  phone:       string;
+  createdAt:   string;
+  totalOrders: number;
+}
+
+export interface CustomerOrder {
+  id:          string;
+  status:      string;
+  totalAmount: number;
+  createdAt:   string;
+}
+
+export interface CustomerDetail {
+  id:        string;
+  name:      string;
+  email:     string;
+  phone:     string;
+  createdAt: string;
+  orders:    CustomerOrder[];
+}
+
+export interface CustomerPagination {
+  total:      number;
+  page:       number;
+  limit:      number;
+  totalPages: number;
+}
+
+export interface CustomersResponse {
+  data:        Customer[];
+  pagination:  CustomerPagination;
+}
+
+// ─── Categories ──────────────────────────────────────────────────────────────
+
+export interface Category {
+  id:     string;
+  name:   string;
+  _count: { products: number };
+}
+
+export interface CategoryProduct {
+  id:       string;
+  name:     string;
+  price:    number;
+  stock:    number;
+  isActive: boolean;
+}
+
+export interface CategoryDetail {
+  id:       string;
+  name:     string;
+  products: CategoryProduct[];
+}
