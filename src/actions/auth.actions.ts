@@ -24,7 +24,7 @@ export async function loginAction(
   try {
     const response = await authService.login({ email, password });
     console.log("Login response:", response);
-    token = response.token;
+    token = response.accessToken;
   } catch (err) {
     return {
       error: err instanceof Error ? err.message : "Invalid email or password.",
