@@ -23,6 +23,7 @@ export async function loginAction(
 
   try {
     const response = await authService.login({ email, password });
+    console.log("Login response:", response);
     token = response.token;
   } catch (err) {
     return {
