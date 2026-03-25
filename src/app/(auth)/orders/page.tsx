@@ -1,4 +1,6 @@
 import Orders from "@/components/pageOrders/Orders/Orders";
+
+export const dynamic = 'force-dynamic';
 import type { OrderStatus } from "@/services/orders.service";
 
 interface OrdersPageProps {
