@@ -1,6 +1,7 @@
 import { ordersService, type OrderStatus } from "@/services/orders.service";
 import OrderModalOverlay from "./OrderModalOverlay";
 import OrderStatusActions from "./OrderStatusActions";
+import OrderMobileModal from "./OrderMobileModal";
 
 const statusStyles: Record<OrderStatus, string> = {
   PENDING:   "bg-amber-500/15 text-amber-400",
@@ -27,6 +28,23 @@ export default async function OrderDetailModal({
   const subtotal = order.products.reduce((sum, p) => sum + p.price * p.quantity, 0);
 
   return (
+    <>
+    {/* Mobile bottom sheet */}
+    <div className="sm:hidden">
+      <OrderMobileModal
+        orderId={orderId}
+        shortId={shortId}
+        status={status}
+        customerName={customerName}
+        totalAmount={totalAmount}
+        itemCount={itemCount}
+        createdAt={createdAt}
+        products={order.products}
+      />
+    </div>
+
+    {/* Desktop modal */}
+    <div className="hidden sm:block">
     <OrderModalOverlay shortId={shortId}>
       {/* Header info */}
       <div className="flex items-center gap-3 px-6 py-3 border-b border-gray-700 shrink-0 flex-wrap">
@@ -119,5 +137,7 @@ export default async function OrderDetailModal({
         </div>
       </div>
     </OrderModalOverlay>
+    </div>
+    </>
   );
 }

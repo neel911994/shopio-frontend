@@ -52,8 +52,8 @@ export default function TopSellingProducts({ products }: TopSellingProductsProps
   ];
 
   return (
-    <div className="rounded-xl border border-gray-700 bg-gray-800 p-5">
-      <div className="mb-4 flex items-center justify-between">
+    <div className="rounded-xl border border-gray-700 bg-gray-800 py-5 px-0 sm:p-5">
+      <div className="mb-4 flex items-center justify-between px-5 sm:px-0">
         <h3 className="font-semibold text-white">Top Selling Products</h3>
         <Link href="/products" className="text-sm font-medium text-indigo-400 hover:text-indigo-300 transition-colors">
           View All →

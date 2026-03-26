@@ -8,4 +8,8 @@ export const categoriesService = {
 
   // GET /api/categories/:id
   getCategory: (id: string) => apiClient.get<CategoryDetail>(`/categories/${id}`),
+
+  // POST /api/categories
+  createCategory: (data: { name: string; description: string }) =>
+    apiClient.post<Category>("/categories", data),
 };

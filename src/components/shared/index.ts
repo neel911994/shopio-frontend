@@ -18,3 +18,5 @@ export { default as DonutChart } from "./DonutChart/DonutChart";
 export type { DonutSegment } from "./DonutChart/DonutChart";
 export { default as EditForm } from "./EditForm/EditForm";
 export type { EditField, FieldType } from "./EditForm/EditForm";
+export { default as MobileCardList } from "./MobileCardList/MobileCardList";
+export type { CardConfig } from "./MobileCardList/MobileCardList";

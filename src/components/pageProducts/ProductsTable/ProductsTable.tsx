@@ -1,19 +1,19 @@
 "use client";
 
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
-import { Table, type Column } from "@/components/shared";
+import { Table, MobileCardList, type Column, type CardConfig } from "@/components/shared";
 import type { Product } from "@/services/products.service";
 
 type StockLabel = "In Stock" | "Low Stock" | "Out of Stock";
 
 type ProductRow = {
-  id: string;
-  name: string;
+  id:           string;
+  name:         string;
   categoryName: string;
-  price: number;
-  stock: number;
-  stockLabel: StockLabel;
-  isActive: boolean;
+  price:        number;
+  stock:        number;
+  stockLabel:   StockLabel;
+  isActive:     boolean;
 };
 
 function getStockLabel(stock: number): StockLabel {
@@ -44,7 +44,7 @@ export default function ProductsTable({ products }: ProductsTableProps) {
     { key: "stock",        header: "Stock",    type: "text" },
     {
       key: "stockLabel",
-      header: "Status",
+      header: "Stock Status",
       render: (row) => (
         <span className={`inline-flex items-center rounded-md px-2 py-0.5 text-xs font-semibold ${stockBadgeStyles[row.stockLabel]}`}>
           {row.stockLabel}
@@ -78,13 +78,58 @@ export default function ProductsTable({ products }: ProductsTableProps) {
     isActive:     p.isActive,
   }));
 
+  const cardConfig: CardConfig<ProductRow> = {
+    title: (row) => (
+      <button
+        onClick={() => handleProductClick(row)}
+        className="font-medium text-indigo-400 hover:text-indigo-300 text-left"
+      >
+        {row.name}
+      </button>
+    ),
+    badge: (row) => (
+      <span className={`inline-flex items-center rounded-md px-2 py-0.5 text-xs font-semibold ${stockBadgeStyles[row.stockLabel]}`}>
+        {row.stockLabel}
+      </span>
+    ),
+    subtitle: (row) => row.categoryName,
+    meta: [
+      { label: "Stock:", value: (row) => row.stock },
+      {
+        value: (row) => (
+          <span className={`inline-flex items-center rounded-md px-2 py-0.5 text-xs font-semibold ${row.isActive ? "bg-emerald-500/15 text-emerald-400" : "bg-gray-500/15 text-gray-400"}`}>
+            {row.isActive ? "Active" : "Inactive"}
+          </span>
+        ),
+      },
+    ],
+    trailing: (row) => (
+      <span className="font-semibold text-white">
+        ₹{Math.round(row.price).toLocaleString("en-IN")}
+      </span>
+    ),
+  };
+
   return (
-    <Table
-      columns={columns}
-      data={rows}
-      keyField="id"
-      onCellAction={handleProductClick}
-      emptyMessage="No products found"
-    />
+    <>
+      <div className="hidden sm:block">
+        <Table
+          columns={columns}
+          data={rows}
+          keyField="id"
+          onCellAction={handleProductClick}
+          emptyMessage="No products found"
+        />
+      </div>
+      <div className="sm:hidden">
+        <MobileCardList
+          data={rows}
+          cardConfig={cardConfig}
+          keyExtractor={(row) => row.id}
+          onCardClick={handleProductClick}
+          emptyMessage="No products found"
+        />
+      </div>
+    </>
   );
 }

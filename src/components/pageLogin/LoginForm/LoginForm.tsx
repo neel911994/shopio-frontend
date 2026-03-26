@@ -19,18 +19,18 @@ export default function LoginForm() {
   return (
     <form
       action={formAction}
-      className="w-full max-w-md rounded-2xl border border-gray-700 bg-gray-800 p-10"
+      className="w-full max-w-md rounded-2xl border border-gray-700 bg-gray-800 p-6 sm:p-10"
     >
       <h1 className="mb-1 text-2xl font-bold text-white">Sign in to SHOPIO</h1>
-      <p className="mb-6 text-sm text-gray-400">
+      <p className="mb-4 text-sm text-gray-400">
         Enter your account details to continue.
       </p>
 
       {state.error && (
-        <p className="mb-4 text-sm text-red-500 text-center">{state.error}</p>
+        <p className="mb-3 text-sm text-red-500 text-center">{state.error}</p>
       )}
 
-      <div className="mb-4">
+      <div className="mb-3">
         <Input
           label="Email address"
           name="email"
@@ -42,7 +42,7 @@ export default function LoginForm() {
         />
       </div>
 
-      <div className="mb-4">
+      <div className="mb-3">
         <Input
           label="Password"
           name="password"
@@ -57,7 +57,7 @@ export default function LoginForm() {
         />
       </div>
 
-      <div className="mb-6">
+      <div className="mb-4">
         <Checkbox label="Remember me" name="remember" />
       </div>
 

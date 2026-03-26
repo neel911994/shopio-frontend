@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
-import { Table, type Column } from "@/components/shared";
+import { Table, MobileCardList, type Column, type CardConfig } from "@/components/shared";
 import type { Customer } from "@/services/customers.service";
 
 type CustomerRow = {
@@ -49,13 +49,45 @@ export default function CustomersTable({ customers }: CustomersTableProps) {
     }),
   }));
 
+  const cardConfig: CardConfig<CustomerRow> = {
+    title: (row) => (
+      <button
+        onClick={() => handleCustomerClick(row)}
+        className="font-medium text-indigo-400 hover:text-indigo-300 text-left"
+      >
+        {row.name}
+      </button>
+    ),
+    subtitle: (row) => row.email,
+    meta: [
+      { value: (row) => row.phone },
+      { label: "Orders:", value: (row) => row.totalOrders },
+    ],
+    trailing: (row) => (
+      <span className="text-xs text-gray-400">{row.joined}</span>
+    ),
+  };
+
   return (
-    <Table
-      columns={columns}
-      data={rows}
-      keyField="id"
-      onCellAction={handleCustomerClick}
-      emptyMessage="No customers found"
-    />
+    <>
+      <div className="hidden sm:block">
+        <Table
+          columns={columns}
+          data={rows}
+          keyField="id"
+          onCellAction={handleCustomerClick}
+          emptyMessage="No customers found"
+        />
+      </div>
+      <div className="sm:hidden">
+        <MobileCardList
+          data={rows}
+          cardConfig={cardConfig}
+          keyExtractor={(row) => row.id}
+          onCardClick={handleCustomerClick}
+          emptyMessage="No customers found"
+        />
+      </div>
+    </>
   );
 }
