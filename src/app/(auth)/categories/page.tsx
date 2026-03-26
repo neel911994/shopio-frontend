@@ -1,5 +1,7 @@
 import Categories from "@/components/pageCategories/Categories/Categories";
 
+export const dynamic = 'force-dynamic';
+
 interface PageProps {
   searchParams: Promise<{ categoryId?: string }>;
 }

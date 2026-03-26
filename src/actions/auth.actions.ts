@@ -23,7 +23,8 @@ export async function loginAction(
 
   try {
     const response = await authService.login({ email, password });
-    token = response.token;
+    console.log("Login response:", response);
+    token = response.accessToken;
   } catch (err) {
     return {
       error: err instanceof Error ? err.message : "Invalid email or password.",
@@ -34,7 +35,7 @@ export async function loginAction(
   cookieStore.set("auth_token", token, {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
-    sameSite: "strict",
+    sameSite: "lax",
     path: "/",
     maxAge: 60 * 60 * 24 * 7, // 7 days
   });

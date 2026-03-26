@@ -1,4 +1,6 @@
 import Products from "@/components/pageProducts/Products/Products";
+
+export const dynamic = 'force-dynamic';
 import type { StockFilter } from "@/services/products.service";
 
 interface PageProps {

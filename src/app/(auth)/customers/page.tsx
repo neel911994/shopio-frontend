@@ -1,5 +1,7 @@
 import Customers from "@/components/pageCustomers/Customers/Customers";
 
+export const dynamic = 'force-dynamic';
+
 interface PageProps {
   searchParams: Promise<{ search?: string; page?: string; limit?: string; customerId?: string }>;
 }

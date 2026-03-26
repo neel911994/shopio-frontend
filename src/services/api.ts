@@ -1,4 +1,5 @@
 import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 const BASE_URL = process.env.API_URL;
 
@@ -24,6 +25,11 @@ async function request<T>(endpoint: string, options?: RequestInit): Promise<T> {
   });
 
   if (!res.ok) {
+    if (res.status === 401) {
+      const cookieStore = await cookies();
+      cookieStore.delete("auth_token");
+      redirect("/login");
+    }
     const errorBody = await res.json().catch(() => null);
     const message =
       errorBody?.message ?? errorBody?.error ?? res.statusText ?? "Something went wrong";
