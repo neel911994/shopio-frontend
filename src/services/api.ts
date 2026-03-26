@@ -26,9 +26,7 @@ async function request<T>(endpoint: string, options?: RequestInit): Promise<T> {
 
   if (!res.ok) {
     if (res.status === 401) {
-      const cookieStore = await cookies();
-      cookieStore.delete("auth_token");
-      redirect("/login");
+      redirect("/auth/logout");
     }
     const errorBody = await res.json().catch(() => null);
     const message =

@@ -22,6 +22,9 @@ export const productsService = {
   updateProduct: (id: string, data: { stock: number; isActive: boolean }) =>
     apiClient.patch<Product>(`/products/${id}`, data),
 
+  // GET /api/products/:id
+  getProduct: (id: string) => apiClient.get<Product>(`/products/${id}`),
+
   // GET /api/products with optional filters + pagination
   listProducts: (filters?: ProductFilters) => {
     const params = new URLSearchParams();

@@ -27,3 +27,4 @@ export { default as GoogleIcon } from "./GoogleIcon/GoogleIcon";
 export { default as DollarIcon } from "./DollarIcon/DollarIcon";
 export { default as CloseIcon } from "./CloseIcon/CloseIcon";
 export { default as ClipboardIcon } from "./ClipboardIcon/ClipboardIcon";
+export { default as ShopioLogoIcon } from "./ShopioLogoIcon/ShopioLogoIcon";

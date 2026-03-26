@@ -65,58 +65,56 @@ export default function ProductFilters({
   return (
     <div className="flex flex-col gap-3">
       {/* Row 1: category pills (lhs) + search + stock dropdown (rhs) */}
-      <div className="flex flex-row gap-3 justify-between w-full">
-        <div className="flex flex-nowrap gap-1">
+      {/* Row 1: category pills */}
+      <div className="flex flex-nowrap gap-0.5">
+        <button
+          onClick={() => handleCategory(undefined)}
+          className={`rounded-full px-2 py-1 text-xs font-medium transition-colors ${
+            !activeCategoryId ? "text-white font-semibold" : "text-gray-400 hover:text-white"
+          }`}
+        >
+          All
+        </button>
+        {categories.map((cat) => (
           <button
-            onClick={() => handleCategory(undefined)}
-            className={`rounded-full px-2 py-1.5 text-sm font-medium transition-colors ${
-              !activeCategoryId ? "text-white font-semibold" : "text-gray-400 hover:text-white"
+            key={cat.id}
+            onClick={() => handleCategory(cat.id)}
+            className={`rounded-full px-2 py-1 text-xs font-medium transition-colors ${
+              activeCategoryId === cat.id ? "text-white font-semibold" : "text-gray-400 hover:text-white"
             }`}
           >
-            All
+            {cat.name}
           </button>
-          {categories.map((cat) => (
-            <button
-              key={cat.id}
-              onClick={() => handleCategory(cat.id)}
-              className={`rounded-full px-2 py-1.5 text-sm font-medium transition-colors ${
-                activeCategoryId === cat.id ? "text-white font-semibold" : "text-gray-400 hover:text-white"
-              }`}
-            >
-              {cat.name}
-            </button>
+        ))}
+      </div>
+
+      {/* Row 2: search + stock dropdown */}
+      <div className="flex flex-wrap items-center gap-2">
+        <div className="relative flex-1 min-w-0">
+          <svg className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+            <circle cx="11" cy="11" r="8" /><path d="m21 21-4.35-4.35" />
+          </svg>
+          <input
+            type="text"
+            placeholder="Search product..."
+            value={localSearch}
+            onChange={(e) => setLocalSearch(e.target.value)}
+            onKeyDown={handleSearchKeyDown}
+            className="w-full rounded-lg border border-gray-700 bg-gray-900 py-1.5 pl-9 pr-3 text-sm text-white placeholder-gray-500 focus:border-indigo-500 focus:outline-none"
+          />
+        </div>
+
+        <select
+          value={activeStock ?? ""}
+          onChange={(e) => handleStock((e.target.value as StockFilter) || undefined)}
+          className="rounded-lg border border-gray-700 bg-gray-900 px-3 py-1.5 text-sm text-white focus:border-indigo-500 focus:outline-none"
+        >
+          {STOCK_FILTERS.map((f) => (
+            <option key={f.label} value={f.value ?? ""}>
+              {f.label}
+            </option>
           ))}
-        </div>
-
-        <div className="flex items-center gap-2">
-          {/* Search */}
-          <div className="relative">
-            <svg className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-              <circle cx="11" cy="11" r="8" /><path d="m21 21-4.35-4.35" />
-            </svg>
-            <input
-              type="text"
-              placeholder="Search product..."
-              value={localSearch}
-              onChange={(e) => setLocalSearch(e.target.value)}
-              onKeyDown={handleSearchKeyDown}
-              className="rounded-lg border border-gray-700 bg-gray-900 py-1.5 pl-9 pr-3 text-sm text-white placeholder-gray-500 focus:border-indigo-500 focus:outline-none w-48"
-            />
-          </div>
-
-          {/* Stock filter dropdown */}
-          <select
-            value={activeStock ?? ""}
-            onChange={(e) => handleStock((e.target.value as StockFilter) || undefined)}
-            className="rounded-lg border border-gray-700 bg-gray-900 px-3 py-1.5 text-sm text-white focus:border-indigo-500 focus:outline-none"
-          >
-            {STOCK_FILTERS.map((f) => (
-              <option key={f.label} value={f.value ?? ""}>
-                {f.label}
-              </option>
-            ))}
-          </select>
-        </div>
+        </select>
       </div>
     </div>
   );

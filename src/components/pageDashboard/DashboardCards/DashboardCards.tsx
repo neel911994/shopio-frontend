@@ -78,7 +78,7 @@ export default function DashboardCards({ stats }: DashboardCardsProps) {
   ];
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
+    <div className="grid grid-cols-2 xl:grid-cols-3 gap-4">
       {cards.map((card) => (
         <StatCard key={card.label} {...card} />
       ))}

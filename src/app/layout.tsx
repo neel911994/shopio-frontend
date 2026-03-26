@@ -4,7 +4,10 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Shopio",
-  description: "Shopio Frontend",
+  description: "Shopio Admin Portal",
+  icons: {
+    icon: "/favicon.svg",
+  },
 };
 
 export default function RootLayout({

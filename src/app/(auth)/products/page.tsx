@@ -11,6 +11,7 @@ interface PageProps {
     page?: string;
     limit?: string;
     productId?: string;
+    focusStock?: string;
   }>;
 }
 
@@ -24,6 +25,7 @@ export default async function ProductsPage({ searchParams }: PageProps) {
       page={params.page ? Number(params.page) : undefined}
       limit={params.limit ? Number(params.limit) : undefined}
       productId={params.productId}
+      focusStock={params.focusStock === "true"}
     />
   );
 }

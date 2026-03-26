@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
 
 export type FieldType = "text" | "number" | "toggle";
@@ -14,10 +14,11 @@ export interface EditField {
 }
 
 interface EditFormProps {
-  fields:     EditField[];
-  onSave:     (values: Record<string, string | number | boolean>) => Promise<void>;
-  closeParam: string;
-  saveLabel?: string;
+  fields:          EditField[];
+  onSave:          (values: Record<string, string | number | boolean>) => Promise<void>;
+  closeParam:      string;
+  saveLabel?:      string;
+  autoFocusField?: string;
 }
 
 export default function EditForm({
@@ -25,11 +26,20 @@ export default function EditForm({
   onSave,
   closeParam,
   saveLabel = "Save",
+  autoFocusField,
 }: EditFormProps) {
   const [values, setValues] = useState<Record<string, string | number | boolean>>(
     Object.fromEntries(fields.map((f) => [f.key, f.initialValue]))
   );
   const [saving, setSaving] = useState(false);
+  const inputRefs = useRef<Record<string, HTMLInputElement | null>>({});
+
+  useEffect(() => {
+    if (autoFocusField && inputRefs.current[autoFocusField]) {
+      inputRefs.current[autoFocusField]?.focus();
+      inputRefs.current[autoFocusField]?.select();
+    }
+  }, [autoFocusField]);
 
   const router = useRouter();
   const pathname = usePathname();
@@ -38,6 +48,7 @@ export default function EditForm({
   function handleClose() {
     const params = new URLSearchParams(searchParams.toString());
     params.delete(closeParam);
+    params.delete("focusStock");
     const qs = params.toString();
     router.push(qs ? `${pathname}?${qs}` : pathname);
   }
@@ -89,13 +100,18 @@ export default function EditForm({
               </label>
             ) : (
               <input
+                ref={(el) => { inputRefs.current[field.key] = el; }}
                 type={field.type}
                 min={field.type === "number" ? 0 : undefined}
                 value={values[field.key] as string | number}
                 onChange={(e) =>
                   set(field.key, field.type === "number" ? Number(e.target.value) : e.target.value)
                 }
-                className="w-full rounded-lg border border-gray-600 bg-gray-700 px-3 py-1.5 text-sm font-semibold text-white focus:border-indigo-500 focus:outline-none"
+                className={`w-full rounded-lg border px-3 py-1.5 text-sm font-semibold text-white focus:outline-none bg-gray-700 ${
+                  autoFocusField === field.key
+                    ? "border-indigo-500 ring-2 ring-indigo-500/40"
+                    : "border-gray-600 focus:border-indigo-500"
+                }`}
               />
             )}
           </div>

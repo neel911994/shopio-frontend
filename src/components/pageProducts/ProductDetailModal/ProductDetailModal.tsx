@@ -11,9 +11,10 @@ function getStockLabel(stock: number) {
 
 interface ProductDetailModalProps {
   product: Product;
+  focusStock?: boolean;
 }
 
-export default function ProductDetailModal({ product }: ProductDetailModalProps) {
+export default function ProductDetailModal({ product, focusStock }: ProductDetailModalProps) {
   return (
     <ProductModalOverlay productName={product.name}>
       {/* Image placeholder */}
@@ -52,6 +53,7 @@ export default function ProductDetailModal({ product }: ProductDetailModalProps)
         <EditForm
           closeParam="productId"
           saveLabel="Edit Product"
+          autoFocusField={focusStock ? "stock" : undefined}
           fields={[
             { key: "stock",    label: "Stock",  type: "number", initialValue: product.stock },
             { key: "isActive", label: "Status", type: "toggle", initialValue: product.isActive },

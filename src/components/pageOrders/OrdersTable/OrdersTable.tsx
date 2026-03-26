@@ -1,17 +1,17 @@
 "use client";
 
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
-import { Table, type Column } from "@/components/shared";
+import { Table, MobileCardList, type Column, type CardConfig } from "@/components/shared";
 import type { Order, OrderStatus } from "@/services/orders.service";
 
 type OrderRow = {
-  orderId: string;
-  shortId: string;
+  orderId:      string;
+  shortId:      string;
   customerName: string;
-  status: OrderStatus;
-  totalAmount: number;
-  itemCount: number;
-  createdAt: string;
+  status:       OrderStatus;
+  totalAmount:  number;
+  itemCount:    number;
+  createdAt:    string;
 };
 
 const statusStyles: Record<OrderStatus, string> = {
@@ -63,13 +63,56 @@ export default function OrdersTable({ orders }: OrdersTableProps) {
     router.push(`${pathname}?${params.toString()}`);
   }
 
+  const cardConfig: CardConfig<OrderRow> = {
+    title:    (row) => (
+      <button
+        onClick={() => handleOrderClick(row)}
+        className="font-mono text-indigo-400 hover:text-indigo-300"
+      >
+        {row.shortId}
+      </button>
+    ),
+    badge:    (row) => {
+      const style = statusStyles[row.status] ?? "bg-gray-500/15 text-gray-400";
+      const label = row.status.charAt(0) + row.status.slice(1).toLowerCase();
+      return (
+        <span className={`inline-flex items-center rounded-md px-2 py-0.5 text-xs font-semibold ${style}`}>
+          {label}
+        </span>
+      );
+    },
+    subtitle: (row) => <span className="font-medium text-white">{row.customerName}</span>,
+    meta: [
+      { label: "Items:", value: (row) => row.itemCount },
+      { value: (row) => row.createdAt },
+    ],
+    trailing: (row) => (
+      <span className="font-semibold text-white">
+        ₹{Math.round(row.totalAmount).toLocaleString("en-IN")}
+      </span>
+    ),
+  };
+
   return (
-    <Table
-      columns={columns}
-      data={rows}
-      keyExtractor={(row) => row.orderId}
-      onCellAction={handleOrderClick}
-      emptyMessage="No orders found"
-    />
+    <>
+      <div className="hidden sm:block">
+        <Table
+          columns={columns}
+          data={rows}
+          keyExtractor={(row) => row.orderId}
+          onCellAction={handleOrderClick}
+          emptyMessage="No orders found"
+        />
+      </div>
+      <div className="sm:hidden">
+        <MobileCardList
+          data={rows}
+          cardConfig={cardConfig}
+          keyExtractor={(row) => row.orderId}
+          onCardClick={handleOrderClick}
+          emptyMessage="No orders found"
+        />
+      </div>
+    </>
   );
 }
