@@ -16,6 +16,7 @@ export default function ProductModalOverlay({
   function handleClose() {
     const params = new URLSearchParams(searchParams.toString());
     params.delete("productId");
+    params.delete("focusStock");
     const qs = params.toString();
     router.push(qs ? `${pathname}?${qs}` : pathname);
   }

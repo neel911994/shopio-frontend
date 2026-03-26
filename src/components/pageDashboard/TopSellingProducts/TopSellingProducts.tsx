@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { Table, type Column } from "@/components/shared";
 import type { TopProduct } from "@/services/dashboard.service";
 
@@ -54,9 +55,9 @@ export default function TopSellingProducts({ products }: TopSellingProductsProps
     <div className="rounded-xl border border-gray-700 bg-gray-800 p-5">
       <div className="mb-4 flex items-center justify-between">
         <h3 className="font-semibold text-white">Top Selling Products</h3>
-        <button className="text-sm font-medium text-indigo-400 hover:text-indigo-300 transition-colors">
+        <Link href="/products" className="text-sm font-medium text-indigo-400 hover:text-indigo-300 transition-colors">
           View All →
-        </button>
+        </Link>
       </div>
       <Table
         columns={columns}

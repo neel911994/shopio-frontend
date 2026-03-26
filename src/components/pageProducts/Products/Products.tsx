@@ -13,6 +13,7 @@ interface ProductsProps {
   page?: number;
   limit?: number;
   productId?: string;
+  focusStock?: boolean;
 }
 
 export default async function Products({
@@ -22,6 +23,7 @@ export default async function Products({
   page = 1,
   limit = 10,
   productId,
+  focusStock,
 }: ProductsProps) {
   const [listResponse, stats] = await Promise.all([
     productsService.listProducts({ stockFilter, categoryId, search, page, limit }),
@@ -30,7 +32,9 @@ export default async function Products({
 
   const { products, categories, pagination } = listResponse;
 
-  const selectedProduct = productId ? products.find((p) => p.id === productId) : null;
+  const productInPage = productId ? products.find((p) => p.id === productId) : null;
+  const selectedProduct =
+    productInPage ?? (productId ? await productsService.getProduct(productId).catch(() => null) : null);
 
   // Fallback pagination when API doesn't return one
   const paginationData = pagination ?? {
@@ -73,7 +77,7 @@ export default async function Products({
       </div>
 
       {selectedProduct && (
-        <ProductDetailModal product={selectedProduct} />
+        <ProductDetailModal product={selectedProduct} focusStock={focusStock} />
       )}
     </div>
   );

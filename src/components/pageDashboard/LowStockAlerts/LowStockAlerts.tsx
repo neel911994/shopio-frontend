@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { Table, type Column } from "@/components/shared";
 import type { LowStockProduct } from "@/services/dashboard.service";
 
@@ -22,39 +23,44 @@ function StockBadge({ stock, stockStatus }: { stock: number; stockStatus: LowSto
   );
 }
 
-const columns: Column<LowStockProduct>[] = [
-  {
-    key: "name",
-    header: "Product",
-    render: (row) => (
-      <div>
-        <p className="font-medium text-white">{row.name}</p>
-        <p className="text-xs text-gray-500">
-          {row.category.name} · ₹{Math.round(row.price).toLocaleString("en-IN")}
-        </p>
-      </div>
-    ),
-  },
-  {
-    key: "stock",
-    header: "Stock",
-    headerClassName: "text-center",
-    className: "text-center",
-    render: (row) => <StockBadge stock={row.stock} stockStatus={row.stockStatus} />,
-  },
-  {
-    key: "reorder",
-    header: "",
-    className: "text-right",
-    render: () => (
-      <button className="rounded-md border border-gray-700 px-3 py-1 text-xs font-medium text-gray-300 transition-colors hover:border-indigo-500 hover:text-indigo-400">
-        Reorder
-      </button>
-    ),
-  },
-];
-
 export default function LowStockAlerts({ products, critical, warning }: LowStockAlertsProps) {
+  const router = useRouter();
+
+  const columns: Column<LowStockProduct>[] = [
+    {
+      key: "name",
+      header: "Product",
+      render: (row) => (
+        <div>
+          <p className="font-medium text-white">{row.name}</p>
+          <p className="text-xs text-gray-500">
+            {row.category.name} · ₹{Math.round(row.price).toLocaleString("en-IN")}
+          </p>
+        </div>
+      ),
+    },
+    {
+      key: "stock",
+      header: "Stock",
+      headerClassName: "text-center",
+      className: "text-center",
+      render: (row) => <StockBadge stock={row.stock} stockStatus={row.stockStatus} />,
+    },
+    {
+      key: "reorder",
+      header: "",
+      className: "text-right",
+      render: (row) => (
+        <button
+          onClick={() => router.push(`/products?productId=${row.id}&focusStock=true`)}
+          className="rounded-md border border-gray-700 px-3 py-1 text-xs font-medium text-gray-300 transition-colors hover:border-indigo-500 hover:text-indigo-400"
+        >
+          Reorder
+        </button>
+      ),
+    },
+  ];
+
   return (
     <div className="rounded-xl border border-gray-700 bg-gray-800 p-5">
       <div className="mb-4 flex items-center justify-between">
