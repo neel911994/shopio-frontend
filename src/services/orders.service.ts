@@ -2,8 +2,8 @@ import { apiClient } from "./api";
 export type {
   OrderStatus, OrderProductSummary, OrderProductDetail,
   Order, OrderDetail, OrderFilters, OrderPagination, OrdersResponse, OrderStats,
-} from "@/config/model";
-import type { OrderFilters, OrdersResponse, OrderDetail, Order, OrderStatus, OrderStats } from "@/config/model";
+} from "@/models/model";
+import type { OrderFilters, OrdersResponse, OrderDetail, Order, OrderStatus, OrderStats } from "@/models/model";
 
 export const ordersService = {
   // GET /api/orders/stats

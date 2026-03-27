@@ -1,6 +1,6 @@
 import { apiClient } from "./api";
-export type { Category, CategoryDetail, CategoryProduct } from "@/config/model";
-import type { Category, CategoryDetail } from "@/config/model";
+export type { Category, CategoryDetail, CategoryProduct } from "@/models/model";
+import type { Category, CategoryDetail } from "@/models/model";
 
 export const categoriesService = {
   // GET /api/categories

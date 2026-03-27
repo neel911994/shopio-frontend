@@ -1,6 +1,6 @@
 import { apiClient } from "./api";
-export type { Customer, CustomerDetail, CustomerOrder, CustomersResponse, CustomerPagination } from "@/config/model";
-import type { CustomerDetail } from "@/config/model";
+export type { Customer, CustomerDetail, CustomerOrder, CustomersResponse, CustomerPagination } from "@/models/model";
+import type { CustomerDetail } from "@/models/model";
 
 export const customersService = {
   // GET /api/customers/:id
