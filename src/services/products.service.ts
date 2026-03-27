@@ -1,8 +1,8 @@
 import { apiClient } from "./api";
 export type {
   StockFilter, StockStatus, Product, ProductCategory, ProductFilters, ProductPagination, ProductsResponse, ProductStats,
-} from "@/config/model";
-import type { Product, ProductFilters, ProductsResponse, ProductStats } from "@/config/model";
+} from "@/models/model";
+import type { Product, ProductFilters, ProductsResponse, ProductStats } from "@/models/model";
 
 export const productsService = {
   // GET /api/products/stats

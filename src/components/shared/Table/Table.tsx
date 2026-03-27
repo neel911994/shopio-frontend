@@ -1,8 +1,6 @@
-"use client";
-
 import React from "react";
 
-export type ColumnType = "text" | "highlight" | "badge" | "currency" | "action";
+export type ColumnType = "text" | "highlight" | "badge" | "currency";
 
 export interface Column<T> {
   key: string;
@@ -19,15 +17,13 @@ interface TableProps<T> {
   data: T[];
   keyField?: string;
   keyExtractor?: (row: T, index: number) => string | number;
-  onRowClick?: (row: T, index: number) => void;
-  onCellAction?: (row: T) => void;
   activeRowKey?: string | number;
   emptyMessage?: string;
   isLoading?: boolean;
   className?: string;
 }
 
-function renderCell<T>(col: Column<T>, row: T, onCellAction?: (row: T) => void): React.ReactNode {
+function renderCell<T>(col: Column<T>, row: T): React.ReactNode {
   const raw = (row as Record<string, unknown>)[col.key];
   const value = raw ?? "";
 
@@ -57,16 +53,6 @@ function renderCell<T>(col: Column<T>, row: T, onCellAction?: (row: T) => void):
       );
     }
 
-    case "action":
-      return (
-        <button
-          onClick={() => onCellAction?.(row)}
-          className="font-mono text-indigo-400 hover:text-indigo-300 hover:underline transition-colors"
-        >
-          {String(value)}
-        </button>
-      );
-
     default:
       return <span className="text-gray-300">{String(value)}</span>;
   }
@@ -76,8 +62,6 @@ export default function Table<T>({
   columns,
   data,
   keyExtractor,
-  onRowClick,
-  onCellAction,
   activeRowKey,
   emptyMessage = "No data available",
   isLoading = false,
@@ -127,12 +111,11 @@ export default function Table<T>({
               return (
                 <tr
                   key={rowKey}
-                  onClick={() => onRowClick?.(row, rowIndex)}
-                  className={`bg-gray-800 transition-colors ${onRowClick ? "cursor-pointer hover:bg-gray-700/50" : ""} ${isActive ? "bg-purple-900/10 ring-1 ring-purple-800" : ""}`}
+                  className={`bg-gray-800 transition-colors ${isActive ? "bg-purple-900/10 ring-1 ring-purple-800" : ""}`}
                 >
                   {columns.map((col) => (
                     <td key={col.key} className={`px-4 py-4 ${col.className || ""}`}>
-                      {renderCell(col, row, onCellAction)}
+                      {renderCell(col, row)}
                     </td>
                   ))}
                 </tr>

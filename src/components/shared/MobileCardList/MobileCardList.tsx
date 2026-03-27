@@ -1,5 +1,3 @@
-"use client";
-
 import React from "react";
 
 export interface CardConfig<T> {
@@ -11,19 +9,17 @@ export interface CardConfig<T> {
 }
 
 interface MobileCardListProps<T> {
-  data:           T[];
-  cardConfig:     CardConfig<T>;
-  keyExtractor:   (row: T) => string | number;
-  onCardClick?:   (row: T) => void;
-  emptyMessage?:  string;
-  className?:     string;
+  data:          T[];
+  cardConfig:    CardConfig<T>;
+  keyExtractor:  (row: T) => string | number;
+  emptyMessage?: string;
+  className?:    string;
 }
 
 export default function MobileCardList<T>({
   data,
   cardConfig,
   keyExtractor,
-  onCardClick,
   emptyMessage = "No data available",
   className = "",
 }: MobileCardListProps<T>) {
@@ -45,10 +41,7 @@ export default function MobileCardList<T>({
         return (
           <div
             key={keyExtractor(row)}
-            onClick={() => onCardClick?.(row)}
-            className={`border-bottom border-b-2 border-gray-700 last:border-b-0 px-0 py-3 bg-gray-800 flex flex-col gap-1.5 transition-colors ${
-              onCardClick ? "cursor-pointer active:bg-gray-700/50" : ""
-            }`}
+            className="border-bottom border-b-2 border-gray-700 last:border-b-0 px-0 py-3 bg-gray-800 flex flex-col gap-1.5"
           >
             {/* Row 1: title + badge */}
             <div className="flex items-center justify-between gap-2">
